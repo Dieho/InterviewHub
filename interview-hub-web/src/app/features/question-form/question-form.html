@@ -1,0 +1,41 @@
+<!-- question-form.html -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Нове питання</h2>
+
+  <div class="field">
+    <label>Текст питання</label>
+    <textarea formControlName="text"></textarea>
+  </div>
+
+  <div class="field">
+    <label>Відповідь</label>
+    <textarea formControlName="answer"></textarea>
+  </div>
+
+  <div class="field">
+    <label>Складність</label>
+    <select formControlName="difficulty">
+      <option value="Junior">Junior</option>
+      <option value="Middle">Middle</option>
+      <option value="Senior">Senior</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Категорія</label>
+    <select formControlName="categoryId">
+      <option value="" disabled>Обери категорію</option>
+      @for (c of categories(); track c.id) {
+        <option [value]="c.id">{{ c.name }}</option>
+      }
+    </select>
+  </div>
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  <button type="submit" [disabled]="isSubmitting()">
+    {{ isSubmitting() ? 'Збереження...' : 'Створити' }}
+  </button>
+</form>

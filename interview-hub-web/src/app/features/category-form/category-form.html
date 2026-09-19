@@ -1,0 +1,14 @@
+<!-- category-form.html -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Нова категорія</h2>
+  <div class="field">
+    <label>Назва</label>
+    <input formControlName="name">
+  </div>
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+  <button type="submit" [disabled]="isSubmitting()">
+    {{ isSubmitting() ? 'Збереження...' : 'Створити' }}
+  </button>
+</form>

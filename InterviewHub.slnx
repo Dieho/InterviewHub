@@ -1,6 +1,10 @@
 <Solution>
-  <Folder Name="/src/" />
+  <Folder Name="/src/">
+    <File Path=".dockerignore" />
+  </Folder>
   <Folder Name="/src/Api/">
     <Project Path="src/Api/InterviewHub.Api.csproj" />
+    <Project Path="src\InterviewHub.Domain\InterviewHub.Domain.csproj" Type="Classic C#" />
+    <Project Path="src\InterviewHub.Tests\InterviewHub.Tests.csproj" Type="Classic C#" />
   </Folder>
 </Solution>

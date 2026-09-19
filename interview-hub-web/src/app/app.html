@@ -1,0 +1,14 @@
+<!-- app.html -->
+<header>
+  @if (authService.isLoggedIn()) {
+    <a routerLink="/add-question">+ Додати питання</a>
+    @if (authService.isAdmin()) {
+      <a routerLink="/add-category">+ Додати категорію</a>
+    }
+    <span>{{ authService.currentEmail() }}</span>
+    <button (click)="authService.logout()">Вийти</button>
+  } @else {
+    <a routerLink="/login">Увійти</a>
+  }
+</header>
+<router-outlet></router-outlet>

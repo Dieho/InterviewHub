@@ -1,0 +1,8 @@
+namespace InterviewHub.Api.Contracts;
+
+public class AuthContracts
+{
+    public record RegisterRequest(string Email, string Password);
+    public record LoginRequest(string Email, string Password);
+    public record AuthResponse(string Token, string Email, string Role);
+}

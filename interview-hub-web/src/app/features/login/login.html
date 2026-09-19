@@ -1,0 +1,28 @@
+<!-- login.html -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Вхід</h2>
+
+  <div class="field">
+    <label>Email</label>
+    <input formControlName="email" type="email">
+    @if (form.get('email')?.invalid && form.get('email')?.touched) {
+      <span class="field-error">Введи коректний email</span>
+    }
+  </div>
+
+  <div class="field">
+    <label>Пароль</label>
+    <input formControlName="password" type="password">
+    @if (form.get('password')?.invalid && form.get('password')?.touched) {
+      <span class="field-error">Мінімум 6 символів</span>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  <button type="submit" [disabled]="isSubmitting()">
+    {{ isSubmitting() ? 'Вхід...' : 'Увійти' }}
+  </button>
+</form>

@@ -1,0 +1,15 @@
+@if (loading()) {
+  <p>Завантаження...</p>
+} @else if (error()) {
+  <p class="error">{{ error() }}</p>
+} @else {
+  <ul>
+    @for (q of questions(); track q.id) {
+      <li>
+        <strong>{{ q.text }}</strong>
+        <span class="badge">{{ q.difficulty }}</span>
+        <span class="category">{{ q.categoryName }}</span>
+      </li>
+    }
+  </ul>
+}
