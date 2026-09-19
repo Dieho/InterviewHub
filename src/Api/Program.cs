@@ -10,6 +10,7 @@ using InterviewHub.Data.Options;
 using InterviewHub.Data.Service;
 using InterviewHub.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -64,6 +65,9 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
+
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<AppDbContext>("database", tags: new[] { "ready" });
 
 var app = builder.Build();
 
@@ -164,5 +168,15 @@ app.MapPost("/categories", async (IQuestionRepository db, CreateCategoryRequest 
     await db.AddCategory(category);
     return Results.Created($"/categories/{category.Id}", new CategoryResponse(category.Id, category.Name));
 }).RequireAuthorization(x=> x.RequireRole("Admin"));
+
+app.MapHealthChecks("/health/live", new HealthCheckOptions
+{
+    Predicate = _ => false  // liveness: не перевіряє нічого зовнішнього, лише "процес відповідає взагалі"
+});
+
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("ready")  // readiness: перевіряє реальне з'єднання з БД
+});
 
 app.Run();
